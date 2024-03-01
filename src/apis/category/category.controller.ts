@@ -5,10 +5,12 @@ import {
 	ApiGetAll,
 	ApiGetOne,
 	ApiUpdate,
-	PaginationDto
+	PaginationDto,
+	UseUserGuard
 } from '@common';
 import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
+import { RoleEnum } from '../user/user.enum';
 import { CreateCategoryCommand } from './commands/create-category.command';
 import { GetAllCategoryPaginatedCommand } from './commands/get-all-category-paginated.command';
 import { GetOneCategoryByIdCommand } from './commands/get-one-category-by-id.command';
@@ -24,6 +26,7 @@ export class CategoryController {
 	constructor(private readonly commandBus: CommandBus) {}
 
 	@Post()
+	@UseUserGuard(RoleEnum.ADMIN, RoleEnum.MANAGER)
 	@ApiCreate(CategoryEntity, 'Category')
 	create(@Body() createCategoryDto: CreateCategoryDto) {
 		return this.commandBus.execute(new CreateCategoryCommand({ data: createCategoryDto }));
@@ -42,6 +45,7 @@ export class CategoryController {
 	}
 
 	@Patch(':id')
+	@UseUserGuard(RoleEnum.ADMIN, RoleEnum.MANAGER)
 	@ApiUpdate(CategoryEntity, 'Category')
 	update(@Param('id') id: string, @Body() updateCategoryDto: UpdateCategoryByIdDto) {
 		return this.commandBus.execute(
@@ -50,6 +54,7 @@ export class CategoryController {
 	}
 
 	@Delete(':id')
+	@UseUserGuard(RoleEnum.ADMIN, RoleEnum.MANAGER)
 	@ApiDelete(CategoryEntity, 'Category')
 	remove(@Param('id') id: string) {
 		return this.commandBus.execute(new RemoveCategoryByIdCommand({ id }));

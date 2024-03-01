@@ -10,8 +10,10 @@ export * from './decorators/validation.decorator';
 
 export * from './enums/language.enum';
 
+export * from './filters/http.filter';
 export * from './filters/typeorm.filter';
 
+export * from './guards/authorization.guard';
 export * from './guards/env.guard';
 
 export * from './helpers/excel.helper';
