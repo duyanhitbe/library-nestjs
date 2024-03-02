@@ -4,6 +4,7 @@ import { UpdateUserByIdCommand } from '../commands/update-user-by-id.command';
 import { UpdateUserByIdHandler } from '../handlers/update-user-by-id.handler';
 import { IUserService } from '../user.interface';
 import { UserService } from '../user.service';
+import { RoleEnum } from '../user.enum';
 
 jest.mock('../user.service');
 
@@ -35,7 +36,8 @@ describe('UpdateUserByIdHandler', () => {
 			id: uuidv4(),
 			data: {
 				username: 'username',
-				password: 'password'
+				password: 'password',
+				role: RoleEnum.MANAGER
 			}
 		});
 

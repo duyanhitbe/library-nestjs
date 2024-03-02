@@ -20,6 +20,11 @@ export const IsEmail = (validationOptions?: validator.ValidationOptions) =>
 		validator.IsEmail({}, { ...validationOptions, message: translate('validation.IS_EMAIL') })
 	);
 
+export const IsUUID = (validationOptions?: validator.ValidationOptions) =>
+	applyDecorators(
+		validator.IsUUID(4, { ...validationOptions, message: translate('validation.IS_UUID') })
+	);
+
 export const IsNumber = (
 	options?: validator.IsNumberOptions,
 	validationOptions?: validator.ValidationOptions

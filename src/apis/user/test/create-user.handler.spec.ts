@@ -3,6 +3,7 @@ import { CreateUserCommand } from '../commands/create-user.command';
 import { CreateUserHandler } from '../handlers/create-user.handler';
 import { IUserService } from '../user.interface';
 import { UserService } from '../user.service';
+import { RoleEnum } from '../user.enum';
 
 jest.mock('../user.service');
 
@@ -33,7 +34,8 @@ describe('CreateUserHandler', () => {
 		const mockCreateUserCommand = new CreateUserCommand({
 			data: {
 				username: 'username',
-				password: 'password'
+				password: 'password',
+				role: RoleEnum.ADMIN
 			}
 		});
 

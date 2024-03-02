@@ -38,8 +38,6 @@ describe('GetOneBookByIdHandler', () => {
 		await handler.execute(getOneBookByIdCommand);
 		const { id } = getOneBookByIdCommand;
 
-		expect(bookService.getOneByIdOrFail).toHaveBeenCalledWith(id, {
-			relations: ['user']
-		});
+		expect(bookService.getOneByIdOrFail).toHaveBeenCalledWith(id);
 	});
 });

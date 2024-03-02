@@ -11,6 +11,7 @@ export type I18nTranslations = {
         "IS_DATE_STRING": string;
         "MIN": string;
         "MAX": string;
+        "IS_UUID": string;
     };
 };
 export type I18nPath = Path<I18nTranslations>;

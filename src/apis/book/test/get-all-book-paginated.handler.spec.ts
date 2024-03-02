@@ -40,9 +40,6 @@ describe('GetAllBookPaginatedHandler', () => {
 		await handler.execute(getAllBookPaginatedCommand);
 		const { query } = getAllBookPaginatedCommand;
 
-		expect(bookService.getAllPaginated).toHaveBeenCalledWith({
-			...query,
-			relations: ['user']
-		});
+		expect(bookService.getAllPaginated).toHaveBeenCalledWith(query);
 	});
 });

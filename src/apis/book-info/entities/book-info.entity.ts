@@ -16,6 +16,6 @@ export class BookInfoEntity extends BaseEntity {
 
 	/** Ngày xuất bản */
 	@ApiProperty({ description: 'Ngày xuất bản' })
-	@Column({ name: 'publish_date', type: 'timestamptz' })
-	publishDate!: Date;
+	@Column({ name: 'publication_date', type: 'timestamptz' })
+	publicationDate!: Date;
 }

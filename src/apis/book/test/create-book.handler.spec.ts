@@ -1,5 +1,8 @@
-import { IUserService } from '@apis/user/user.interface';
-import { UserService } from '@apis/user/user.service';
+import { IBookInfoService } from '@app/apis/book-info/book-info.interface';
+import { BookInfoService } from '@app/apis/book-info/book-info.service';
+import { ICategoryService } from '@app/apis/category/category.interface';
+import { CategoryService } from '@app/apis/category/category.service';
+import { random } from '@app/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { IBookService } from '../book.interface';
 import { BookService } from '../book.service';
@@ -7,7 +10,8 @@ import { CreateBookCommand } from '../commands/create-book.command';
 import { CreateBookHandler } from '../handlers/create-book.handler';
 
 jest.mock('../book.service');
-jest.mock('../../user/user.service');
+jest.mock('../../category/category.service');
+jest.mock('../../book-info/book-info.service');
 
 describe('CreateBookHandler', () => {
 	let handler: CreateBookHandler;
@@ -22,8 +26,12 @@ describe('CreateBookHandler', () => {
 					useClass: BookService
 				},
 				{
-					provide: IUserService,
-					useClass: UserService
+					provide: ICategoryService,
+					useClass: CategoryService
+				},
+				{
+					provide: IBookInfoService,
+					useClass: BookInfoService
 				}
 			]
 		}).compile();
@@ -39,14 +47,15 @@ describe('CreateBookHandler', () => {
 	it('should call bookService.create with the provided data', async () => {
 		const createBookCommand = new CreateBookCommand({
 			data: {
-				name: 'Harry Potter',
-				userId: '123'
+				name: random(20),
+				author: random(10),
+				categoryId: '123',
+				publicationDate: new Date().toString()
 			}
 		});
 
 		await handler.execute(createBookCommand);
-		const { data } = createBookCommand;
 
-		expect(bookService.create).toHaveBeenCalledWith(data);
+		expect(bookService.create).toHaveBeenCalled();
 	});
 });

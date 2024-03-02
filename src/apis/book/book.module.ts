@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { BookInfoModule } from '../book-info/book-info.module';
+import { CategoryModule } from '../category/category.module';
 import { BookController } from './book.controller';
 import { IBookService } from './book.interface';
 import { BookService } from './book.service';
@@ -11,7 +13,7 @@ import { RemoveBookByIdHandler } from './handlers/remove-book-by-id.handler';
 import { UpdateBookByIdHandler } from './handlers/update-book-by-id.handler';
 
 @Module({
-	imports: [TypeOrmModule.forFeature([BookEntity])],
+	imports: [TypeOrmModule.forFeature([BookEntity]), CategoryModule, BookInfoModule],
 	controllers: [BookController],
 	providers: [
 		{

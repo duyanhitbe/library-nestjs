@@ -1,20 +1,19 @@
 import { IBookService } from '@apis/book/book.interface';
 import { CreateBookDto } from '@apis/book/dto/create-book.dto';
 import { UpdateBookByIdDto } from '@apis/book/dto/update-book-by-id.dto';
-import { UserEntity } from '@apis/user/entities/user.entity';
-import { IUserService } from '@apis/user/user.interface';
+import { BookInfoEntity } from '@app/apis/book-info/entities/book-info.entity';
 import { BookEntity } from '@app/apis/book/entities/book.entity';
 import { AppModule } from '@app/app.module';
+import { random } from '@app/common';
 import { INestApplication, VersioningType } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
+import { createRandomCategory } from './category.e2e-spec';
 
 describe('BookController (e2e)', () => {
 	let app: INestApplication;
 	let httpServer: any;
 	let bookService: IBookService;
-	let userService: IUserService;
-	let user: UserEntity;
 	let book: BookEntity;
 
 	beforeEach(async () => {
@@ -36,30 +35,17 @@ describe('BookController (e2e)', () => {
 
 		//Remove all book
 		bookService = app.get<IBookService>(IBookService);
-		userService = app.get<IUserService>(IUserService);
-		await userService.softRemoveAll();
 		await bookService.softRemoveAll();
-		user = await userService.create({
-			username: 'username',
-			password: 'password'
-		});
-		book = await bookService.create({
-			name: 'name',
-			userId: user.id
-		});
+		book = await createRandomBook();
 	});
 
 	afterAll(async () => {
-		await userService.softRemoveAll();
 		await bookService.softRemoveAll();
 		await app.close();
 	});
 
 	it('/v1/book (GET)', async () => {
-		await bookService.create({
-			name: 'Self Help',
-			userId: user.id
-		});
+		await createRandomBook();
 		return request(httpServer)
 			.get('/v1/book')
 			.query({ limit: 1, page: 1, order: JSON.stringify({ createdAt: 'asc' }) })
@@ -85,9 +71,12 @@ describe('BookController (e2e)', () => {
 			});
 	});
 	it('/v1/book (POST)', async () => {
+		const category = await createRandomCategory();
 		const createBookData: CreateBookDto = {
-			name: 'Harry Potter',
-			userId: user.id
+			name: random(20),
+			author: random(10),
+			publicationDate: new Date().toISOString(),
+			categoryId: category.id
 		};
 		return request(httpServer)
 			.post('/v1/book')
@@ -121,3 +110,13 @@ describe('BookController (e2e)', () => {
 			});
 	});
 });
+
+export async function createRandomBook() {
+	const category = await createRandomCategory();
+	const bookInfo = await BookInfoEntity.create({
+		name: random(20),
+		author: random(10),
+		publicationDate: new Date()
+	});
+	return BookEntity.create({ categoryId: category.id, bookInfoId: bookInfo.id });
+}
