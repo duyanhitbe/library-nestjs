@@ -4,6 +4,7 @@ import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as packageJson from 'packageJson';
 import { BookInfoEntity } from './apis/book-info/entities/book-info.entity';
+import { BorrowBookResponse } from './apis/book/dto/borrow-book.dto';
 import { BorrowerEntity } from './apis/borrower/entities/borrower.entity';
 import { CategoryEntity } from './apis/category/entities/category.entity';
 
@@ -41,4 +42,11 @@ export function useSwagger(app: INestApplication) {
 	});
 }
 
-const extraModels = [BookEntity, BookInfoEntity, BorrowerEntity, CategoryEntity, UserEntity];
+const extraModels = [
+	BookEntity,
+	BookInfoEntity,
+	BorrowerEntity,
+	CategoryEntity,
+	UserEntity,
+	BorrowBookResponse
+];

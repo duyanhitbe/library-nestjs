@@ -4,6 +4,7 @@ import { BorrowerController } from './borrower.controller';
 import { IBorrowerService } from './borrower.interface';
 import { BorrowerService } from './borrower.service';
 import { BorrowerEntity } from './entities/borrower.entity';
+import { GetBorrowerByBookIdHandler } from './handlers/get-borrower-by-book-id.handler';
 
 @Module({
 	imports: [TypeOrmModule.forFeature([BorrowerEntity])],
@@ -12,7 +13,8 @@ import { BorrowerEntity } from './entities/borrower.entity';
 		{
 			provide: IBorrowerService,
 			useClass: BorrowerService
-		}
+		},
+		GetBorrowerByBookIdHandler
 	],
 	exports: [IBorrowerService]
 })

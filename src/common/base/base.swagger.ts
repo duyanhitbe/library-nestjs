@@ -47,6 +47,37 @@ export const getBaseSchema = ($ref: any, status = 200): SchemaObject & Partial<R
 	};
 };
 
+export const getBaseException = (
+	message: string,
+	status: number
+): SchemaObject & Partial<ReferenceObject> => {
+	if (status === 400) {
+		return {
+			properties: {
+				...getBaseProperties(status),
+				message: { example: message },
+				errors: {
+					type: 'array',
+					items: {
+						properties: {
+							property: { example: 'string' },
+							error: { example: 'string' }
+						}
+					}
+				}
+			}
+		};
+	}
+
+	return {
+		properties: {
+			...getBaseProperties(status),
+			message: { example: message },
+			errors: { example: [] }
+		}
+	};
+};
+
 export const getPaginationSchema = (
 	$ref: any,
 	status = 200
@@ -78,8 +109,14 @@ export const ApiCreate = ($ref: any, name: string) =>
 			description: 'Tạo mới một ' + name + ' thành công',
 			schema: getBaseSchema($ref, 201)
 		}),
-		ApiBadRequestResponse({ description: 'Sai kiểu hoặc thiếu dữ liệu trong body' }),
-		ApiConflictResponse({ description: 'Dữ liệu tạo bị trùng lặp (đã tạo rồi)' })
+		ApiBadRequestResponse({
+			schema: getBaseException('BadRequest', 400),
+			description: 'Sai kiểu hoặc thiếu dữ liệu trong body'
+		}),
+		ApiConflictResponse({
+			schema: getBaseException('Conflict', 409),
+			description: 'Dữ liệu tạo bị trùng lặp (đã tạo rồi)'
+		})
 	);
 
 /**
@@ -110,7 +147,10 @@ export const ApiGetOne = ($ref: any, name: string) =>
 			description: 'Lấy chi tiết một ' + name + ' thành công',
 			schema: getBaseSchema($ref)
 		}),
-		ApiNotFoundResponse({ description: 'Không thể tìm thấy ' + name })
+		ApiNotFoundResponse({
+			schema: getBaseException('NotFound', 404),
+			description: 'Không thể tìm thấy ' + name
+		})
 	);
 
 /**
@@ -126,8 +166,14 @@ export const ApiUpdate = ($ref: any, name: string) =>
 			description: 'Cập nhật một ' + name + ' thành công',
 			schema: getBaseSchema($ref)
 		}),
-		ApiBadRequestResponse({ description: 'Sai kiểu hoặc thiếu dữ liệu trong body' }),
-		ApiNotFoundResponse({ description: 'Không thể tìm thấy ' + name })
+		ApiBadRequestResponse({
+			schema: getBaseException('BadRequest', 400),
+			description: 'Sai kiểu hoặc thiếu dữ liệu trong body'
+		}),
+		ApiNotFoundResponse({
+			schema: getBaseException('NotFound', 404),
+			description: 'Không thể tìm thấy ' + name
+		})
 	);
 
 /**
@@ -143,7 +189,10 @@ export const ApiDelete = ($ref: any, name: string) =>
 			description: 'Xoá một ' + name + ' thành công',
 			schema: getBaseSchema($ref)
 		}),
-		ApiNotFoundResponse({ description: 'Không thể tìm thấy ' + name })
+		ApiNotFoundResponse({
+			schema: getBaseException('NotFound', 404),
+			description: 'Không thể tìm thấy ' + name
+		})
 	);
 
 /**

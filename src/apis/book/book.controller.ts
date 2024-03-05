@@ -6,16 +6,21 @@ import {
 	ApiGetOne,
 	ApiUpdate,
 	PaginationDto,
-	UseUserGuard
+	UseUserGuard,
+	getBaseSchema
 } from '@common';
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, Query } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
+import { ApiOkResponse, ApiOperation } from '@nestjs/swagger';
 import { RoleEnum } from '../user/user.enum';
+import { BorrowBookCommand } from './commands/borrow-book.command';
 import { CreateBookCommand } from './commands/create-book.command';
 import { GetAllBookPaginatedCommand } from './commands/get-all-book-paginated.command';
+import { GetBookByBorrowerIdCommand } from './commands/get-book-by-borrower-id.command';
 import { GetOneBookByIdCommand } from './commands/get-one-book-by-id.command';
 import { RemoveBookByIdCommand } from './commands/remove-book-by-id.command';
 import { UpdateBookByIdCommand } from './commands/update-book-by-id.command';
+import { BorrowBookDto, BorrowBookResponse } from './dto/borrow-book.dto';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookByIdDto } from './dto/update-book-by-id.dto';
 import { BookEntity } from './entities/book.entity';
@@ -56,5 +61,25 @@ export class BookController {
 	@ApiDelete(BookEntity, 'Book')
 	remove(@Param('id') id: string) {
 		return this.commandBus.execute(new RemoveBookByIdCommand({ id }));
+	}
+
+	@Post('/borrow')
+	@HttpCode(200)
+	@UseUserGuard(RoleEnum.ADMIN, RoleEnum.MANAGER)
+	@ApiOperation({ summary: 'Cho mượn sách' })
+	@ApiOkResponse({
+		schema: getBaseSchema(BorrowBookResponse)
+	})
+	borrowBook(@Body() data: BorrowBookDto) {
+		return this.commandBus.execute(new BorrowBookCommand({ data }));
+	}
+
+	@Get('/borrow/:borrowerId')
+	@HttpCode(200)
+	@UseUserGuard(RoleEnum.ADMIN, RoleEnum.MANAGER)
+	@ApiOperation({ summary: 'Lấy danh sách sách theo id của người mượn sách' })
+	@ApiGetAll(BookEntity, 'Book')
+	getBookByBorrower(@Query() query: PaginationDto, @Param('borrowerId') borrowerId: string) {
+		return this.commandBus.execute(new GetBookByBorrowerIdCommand({ borrowerId, query }));
 	}
 }
