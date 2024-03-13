@@ -3,6 +3,7 @@ import { UserEntity } from '@apis/user/entities/user.entity';
 import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as packageJson from 'packageJson';
+import { LoginUserResponseDto } from './apis/auth/dto/login-user.dto';
 import { BookInfoEntity } from './apis/book-info/entities/book-info.entity';
 import { BorrowBookResponse } from './apis/book/dto/borrow-book.dto';
 import { BorrowerEntity } from './apis/borrower/entities/borrower.entity';
@@ -48,5 +49,6 @@ const extraModels = [
 	BorrowerEntity,
 	CategoryEntity,
 	UserEntity,
-	BorrowBookResponse
+	BorrowBookResponse,
+	LoginUserResponseDto
 ];

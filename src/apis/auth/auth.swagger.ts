@@ -1,6 +1,7 @@
 import { getBaseProperties } from '@common';
 import { applyDecorators } from '@nestjs/common';
-import { ApiOkResponse, ApiOperation } from '@nestjs/swagger';
+import { ApiOkResponse, ApiOperation, getSchemaPath } from '@nestjs/swagger';
+import { LoginUserResponseDto } from './dto/login-user.dto';
 
 /**
  * Swagger login
@@ -15,10 +16,7 @@ export const ApiLogin = (userType: UserType) =>
 				properties: {
 					...getBaseProperties(200),
 					data: {
-						properties: {
-							accessToken: { example: 'string' },
-							expiresIn: { example: 12345678 }
-						}
+						$ref: getSchemaPath(LoginUserResponseDto)
 					}
 				}
 			}

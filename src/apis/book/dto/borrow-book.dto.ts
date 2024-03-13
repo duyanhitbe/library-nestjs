@@ -3,13 +3,14 @@ import { BorrowerEntity } from '@app/apis/borrower/entities/borrower.entity';
 import { CategoryEntity } from '@app/apis/category/entities/category.entity';
 import { IsNotEmpty, IsString, IsUUID } from '@common';
 import { ApiHideProperty, ApiProperty, OmitType } from '@nestjs/swagger';
-import { Exclude, Type } from 'class-transformer';
+import { Exclude, Expose, Type } from 'class-transformer';
 import { BookEntity } from '../entities/book.entity';
 
 export class BorrowBookDto {
 	/** Mã sách */
-	@ApiProperty({ description: 'Mã sách' })
+	@ApiProperty({ description: 'Mã sách', name: 'book_id' })
 	@IsUUID()
+	@Expose({ name: 'book_id' })
 	bookId!: string;
 
 	/** Tên người mượn sách */

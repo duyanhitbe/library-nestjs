@@ -2,6 +2,7 @@ import { IJwtService } from '@modules/jwt';
 import { Logger } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { LoginCommand } from '../commands/login.command';
+import { LoginUserResponseDto } from '../dto/login-user.dto';
 
 @CommandHandler(LoginCommand)
 export class LoginHandler implements ICommandHandler<LoginCommand> {
@@ -18,6 +19,9 @@ export class LoginHandler implements ICommandHandler<LoginCommand> {
 		const expiresIn = Math.floor(Date.now() / 1000) + 60 * 60; // 60 phút
 		const options = { expiresIn };
 		const accessToken = await this.jwtService.sign(payload, options);
-		return { accessToken, expiresIn };
+		return new LoginUserResponseDto({
+			accessToken,
+			expiresIn
+		});
 	}
 }
