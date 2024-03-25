@@ -2,8 +2,8 @@ import { BaseEntity } from "@common";
 
 export abstract class IAuthService {
     /** 
-     * Lấy service theo loại user
-     * @param userType Loại user
+     * Get service by user type
+     * @param userType Type of target user
      * @return BaseAuthService
      * @example this.authService.getService('user')
      */
@@ -12,17 +12,17 @@ export abstract class IAuthService {
 
 export interface BaseAuthService {
     /** 
-     * Kiểm tra và trả về một user
-     * @param username Tài khoản đăng nhập
-     * @param password Mật khẩu
+     * Validate user by username and password
+     * @param username Username login
+     * @param password Password login
      * @return Promise<BaseAuthEntity>
      * @example this.authService.getService('user').validateUserByUsernamePassword(username, password)
      */
     validateUserByUsernamePassword(username: string, password: string): Promise<BaseAuthEntity>;
 
     /** 
-     * Kiểm tra và trả về một user
-     * @param id id của tài khoản
+     * Validate user by its id
+     * @param id User's id
      * @return Promise<BaseAuthEntity>
      * @example this.authService.getService('user').validateUserById(uuid)
      */

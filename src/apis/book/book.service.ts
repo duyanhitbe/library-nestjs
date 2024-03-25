@@ -6,7 +6,7 @@ import { BookEntity } from './entities/book.entity';
 
 @Injectable()
 export class BookService extends IBookService {
-	notFoundMessage = 'Không tìm thấy Book';
+	notFoundMessage = 'Book not found';
 
 	constructor(@InjectRepository(BookEntity) private readonly bookRepo: Repository<BookEntity>) {
 		super(bookRepo);

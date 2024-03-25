@@ -3,26 +3,26 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
 
 export class CreateBookDto {
-	/** Mã loại sách */
-	@ApiProperty({ description: 'Mã loại sách', name: 'category_id' })
+	/** Category id */
+	@ApiProperty({ description: 'Category id', name: 'category_id' })
 	@IsUUID()
 	@Expose({ name: 'category_id' })
 	categoryId!: string;
 
-	/** Tên sách */
-	@ApiProperty({ description: 'Tên sách' })
+	/** Book name */
+	@ApiProperty({ description: 'Book name' })
 	@IsString()
 	@IsNotEmpty()
 	name!: string;
 
-	/** Tác giả */
-	@ApiProperty({ description: 'Tác giả' })
+	/** Author name */
+	@ApiProperty({ description: 'Author name' })
 	@IsString()
 	@IsNotEmpty()
 	author!: string;
 
-	/** Ngày xuất bản */
-	@ApiProperty({ description: 'Ngày xuất bản', name: 'publication_date' })
+	/** Publication date */
+	@ApiProperty({ description: 'Publication date', name: 'publication_date' })
 	@IsDateString()
 	@Expose({ name: 'publication_date' })
 	publicationDate!: string;

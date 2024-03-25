@@ -5,12 +5,12 @@ import { LoginUserResponseDto } from './dto/login-user.dto';
 
 /**
  * Swagger login
- * @param userType Loại người dùng
+ * @param userType User type
  * @example ApiLogin('user')
  */
 export const ApiLogin = (userType: UserType) =>
 	applyDecorators(
-		ApiOperation({ summary: `Đăng nhập ${userType}` }),
+		ApiOperation({ summary: `Login ${userType}` }),
 		ApiOkResponse({
 			schema: {
 				properties: {

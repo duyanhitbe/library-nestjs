@@ -4,17 +4,20 @@ import { IsEnum } from 'class-validator';
 import { RoleEnum } from '../user.enum';
 
 export class CreateUserDto {
-	@ApiProperty({ description: 'Tên đăng nhập' })
+	/** Username login */
+	@ApiProperty({ description: 'Username login' })
 	@IsString()
 	@IsNotEmpty()
 	username!: string;
 
-	@ApiProperty({ description: 'Mật khẩu đăng nhập' })
+	/** Password login */
+	@ApiProperty({ description: 'Password login' })
 	@IsString()
 	@IsNotEmpty()
 	password!: string;
 
-	@ApiProperty({ description: 'Role' })
+	/** User role */
+	@ApiProperty({ description: 'User role' })
 	@IsEnum(RoleEnum)
 	role!: RoleEnum;
 }

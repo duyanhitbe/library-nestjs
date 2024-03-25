@@ -11,11 +11,8 @@ import {
 	ApiTags,
 	getSchemaPath
 } from '@nestjs/swagger';
-import {
-	ReferenceObject,
-	SchemaObject
-} from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
-import { Language } from '../enums/language.enum';
+import { ReferenceObject, SchemaObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
+import { Language } from '@app/common';
 
 export const getBaseProperties = (
 	status: number
@@ -97,127 +94,127 @@ export const getPaginationSchema = (
 };
 
 /**
- * Swagger cho API tạo
+ * Swagger creation API
  * @param $ref Class Schema
- * @param name Tên schema
+ * @param name Schema name
  * @example ApiCreate(User, 'user')
  */
 export const ApiCreate = ($ref: any, name: string) =>
 	applyDecorators(
-		ApiOperation({ summary: 'Tạo mới một ' + name }),
+		ApiOperation({ summary: 'Create a new ' + name }),
 		ApiCreatedResponse({
-			description: 'Tạo mới một ' + name + ' thành công',
+			description: 'Create a new ' + name + ' successfully',
 			schema: getBaseSchema($ref, 201)
 		}),
 		ApiBadRequestResponse({
 			schema: getBaseException('BadRequest', 400),
-			description: 'Sai kiểu hoặc thiếu dữ liệu trong body'
+			description: 'Wrong or missing data'
 		}),
 		ApiConflictResponse({
 			schema: getBaseException('Conflict', 409),
-			description: 'Dữ liệu tạo bị trùng lặp (đã tạo rồi)'
+			description: 'Data was duplicated'
 		})
 	);
 
 /**
- * Swagger cho API lấy danh sách
+ * Swagger get list API
  * @param $ref Class Schema
- * @param name Tên schema
+ * @param name Schema name
  * @example ApiGetAll(User, 'user')
  */
 export const ApiGetAll = ($ref: any, name: string) =>
 	applyDecorators(
-		ApiOperation({ summary: 'Lấy danh sách các ' + name }),
+		ApiOperation({ summary: 'Get a list of ' + name }),
 		ApiOkResponse({
-			description: 'Lấy danh sách các ' + name + ' thành công',
+			description: 'Get a list of ' + name + ' successfully',
 			schema: getPaginationSchema($ref)
 		})
 	);
 
 /**
- * Swagger cho API lấy chi tiết
+ * Swagger get detail API
  * @param $ref Class Schema
- * @param name Tên schema
+ * @param name Schema name
  * @example ApiGetOne(User, 'user')
  */
 export const ApiGetOne = ($ref: any, name: string) =>
 	applyDecorators(
-		ApiOperation({ summary: 'Lấy chi tiết một ' + name }),
+		ApiOperation({ summary: 'Get detail a ' + name }),
 		ApiOkResponse({
-			description: 'Lấy chi tiết một ' + name + ' thành công',
+			description: 'Get detail a ' + name + ' successfully',
 			schema: getBaseSchema($ref)
 		}),
 		ApiNotFoundResponse({
 			schema: getBaseException('NotFound', 404),
-			description: 'Không thể tìm thấy ' + name
+			description: name + ' not found'
 		})
 	);
 
 /**
- * Swagger cho API cập nhật
+ * Swagger update API
  * @param $ref Class Schema
- * @param name Tên schema
+ * @param name Schema name
  * @example ApiUpdate(User, 'user')
  */
 export const ApiUpdate = ($ref: any, name: string) =>
 	applyDecorators(
-		ApiOperation({ summary: 'Cập nhật một ' + name }),
+		ApiOperation({ summary: 'Update a ' + name }),
 		ApiOkResponse({
-			description: 'Cập nhật một ' + name + ' thành công',
+			description: 'Update a ' + name + ' successfully',
 			schema: getBaseSchema($ref)
 		}),
 		ApiBadRequestResponse({
 			schema: getBaseException('BadRequest', 400),
-			description: 'Sai kiểu hoặc thiếu dữ liệu trong body'
+			description: 'Wrong or missing data'
 		}),
 		ApiNotFoundResponse({
 			schema: getBaseException('NotFound', 404),
-			description: 'Không thể tìm thấy ' + name
+			description: name + ' not found'
 		})
 	);
 
 /**
- * Swagger cho API xoá
+ * Swagger deletion API
  * @param $ref Class Schema
- * @param name Tên schema
+ * @param name Schema name
  * @example ApiDelete(User, 'user')
  */
 export const ApiDelete = ($ref: any, name: string) =>
 	applyDecorators(
-		ApiOperation({ summary: 'Xoá một ' + name }),
+		ApiOperation({ summary: 'Delete a ' + name }),
 		ApiOkResponse({
-			description: 'Xoá một ' + name + ' thành công',
+			description: 'Delete a ' + name + ' successfully',
 			schema: getBaseSchema($ref)
 		}),
 		ApiNotFoundResponse({
 			schema: getBaseException('NotFound', 404),
-			description: 'Không thể tìm thấy ' + name
+			description: name + ' not found'
 		})
 	);
 
 /**
- * Swagger ngôn ngữ
+ * Swagger language
  * @example ApiLanguage()
  */
 export const ApiLanguage = () =>
 	applyDecorators(
 		ApiHeader({
 			name: 'x-lang',
-			description: 'Ngôn ngữ',
+			description: 'Language',
 			enum: Language,
 			required: false
 		})
 	);
 
 /**
- * Swagger ẩn controller trên production
+ * Swagger hide controller on production
  * @example ApiHideController()
  */
 export const ApiHideController = () =>
 	applyDecorators(ApiExcludeController(process.env.NODE_ENV === 'production'));
 
 /**
- * Swagger cho controller
+ * Short-hand swagger decorators for controller
  * @example ApiController()
  */
 export const ApiController = (name: string) =>

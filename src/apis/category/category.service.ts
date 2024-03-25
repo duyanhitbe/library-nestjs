@@ -6,7 +6,7 @@ import { CategoryEntity } from './entities/category.entity';
 
 @Injectable()
 export class CategoryService extends ICategoryService {
-	notFoundMessage = 'Không tìm thấy Category';
+	notFoundMessage = 'Category not found';
 
 	constructor(
 		@InjectRepository(CategoryEntity) private readonly categoryRepo: Repository<CategoryEntity>

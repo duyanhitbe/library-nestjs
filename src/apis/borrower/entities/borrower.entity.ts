@@ -6,22 +6,22 @@ import { Column, Entity, JoinTable, ManyToMany } from 'typeorm';
 
 @Entity({ name: 'borrowers' })
 export class BorrowerEntity extends BaseEntity {
-	/** Tên người mượn sách */
-	@ApiProperty({ description: 'Tên người mượn sách' })
+	/** Borrower name */
+	@ApiProperty({ description: 'Borrower name' })
 	@Column()
 	name!: string;
 
-	/** Số điện thoại người mượn sách */
-	@ApiProperty({ description: 'Số điện thoại người mượn sách' })
+	/** Borrower phone */
+	@ApiProperty({ description: 'Borrower phone' })
 	@Column()
 	phone!: string;
 
-	/** Địa chỉ người mượn sách */
-	@ApiProperty({ description: 'Địa chỉ người mượn sách' })
+	/** Borrower address */
+	@ApiProperty({ description: 'Borrower address' })
 	@Column()
 	address!: string;
 
-	/** Danh sách sách */
+	/** List of books this borrower borrow */
 	@ApiHideProperty()
 	@ManyToMany(() => BookEntity, { onDelete: 'CASCADE' })
 	@JoinTable({

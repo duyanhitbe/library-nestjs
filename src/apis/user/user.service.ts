@@ -7,7 +7,7 @@ import { IUserService } from './user.interface';
 
 @Injectable()
 export class UserService extends IUserService {
-	notFoundMessage = 'Không tìm thấy User';
+	notFoundMessage = 'User not found';
 
 	constructor(@InjectRepository(UserEntity) private readonly userRepo: Repository<UserEntity>) {
 		super(userRepo);

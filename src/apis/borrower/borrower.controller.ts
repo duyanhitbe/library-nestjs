@@ -14,7 +14,7 @@ export class BorrowerController {
 	@Get('/book/:bookId')
 	@HttpCode(200)
 	@UseUserGuard(RoleEnum.ADMIN, RoleEnum.MANAGER)
-	@ApiOperation({ summary: 'Lấy danh sách người mượn sách theo id của sách' })
+	@ApiOperation({ summary: 'Get a list of borrowers by book id' })
 	@ApiGetAll(BorrowerEntity, 'Borrower')
 	getBookByBorrower(@Query() query: PaginationDto, @Param('bookId') bookId: string) {
 		return this.commandBus.execute(new GetBorrowerByBookIdCommand({ bookId, query }));

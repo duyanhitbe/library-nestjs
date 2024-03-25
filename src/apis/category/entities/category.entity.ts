@@ -4,8 +4,8 @@ import { Column, Entity } from 'typeorm';
 
 @Entity({ name: 'categories' })
 export class CategoryEntity extends BaseEntity {
-	/** name */
-	@ApiProperty({ description: 'name' })
+	/** Category name */
+	@ApiProperty({ description: 'Category name' })
 	@Column()
 	name!: string;
 }

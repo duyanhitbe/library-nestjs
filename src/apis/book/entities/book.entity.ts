@@ -8,32 +8,32 @@ import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToOne 
 
 @Entity({ name: 'books' })
 export class BookEntity extends BaseEntity {
-	/** Mã thông tin sách */
-	@ApiProperty({ description: 'Mã thông tin sách', name: 'book_info_id' })
+	/** Book info id */
+	@ApiProperty({ description: 'Book info id', name: 'book_info_id' })
 	@Column({ name: 'book_info_id' })
 	@Expose({ name: 'book_info_id' })
 	bookInfoId!: string;
 
-	/** Mã loại sách */
-	@ApiProperty({ description: 'Mã loại sách', name: 'category_id' })
+	/** Category id */
+	@ApiProperty({ description: 'Category id', name: 'category_id' })
 	@Column({ name: 'category_id' })
 	@Expose({ name: 'category_id' })
 	categoryId!: string;
 
-	/** Thông tin sách */
-	@ApiProperty({ description: 'Thông tin sách', name: 'book_info' })
+	/** Book info */
+	@ApiProperty({ description: 'Book info', name: 'book_info' })
 	@OneToOne(() => BookInfoEntity, { eager: true, onDelete: 'SET NULL' })
 	@JoinColumn({ name: 'book_info_id' })
 	@Expose({ name: 'book_info' })
 	bookInfo?: BookInfoEntity;
 
-	/** Loại sách */
-	@ApiProperty({ description: 'Loại sách' })
+	/** Category */
+	@ApiProperty({ description: 'Category' })
 	@ManyToOne(() => CategoryEntity, { eager: true })
 	@JoinColumn({ name: 'category_id' })
 	category?: CategoryEntity;
 
-	/** Danh sách người mượn sách */
+	/** List of borrowers borrowed this book */
 	@ApiHideProperty()
 	@ManyToMany(() => BorrowerEntity, { onDelete: 'CASCADE' })
 	@JoinTable({

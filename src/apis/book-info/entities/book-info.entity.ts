@@ -5,18 +5,18 @@ import { Column, Entity } from 'typeorm';
 
 @Entity({ name: 'book_infos' })
 export class BookInfoEntity extends BaseEntity {
-	/** name */
-	@ApiProperty({ description: 'name' })
+	/** Book name */
+	@ApiProperty({ description: 'Book name' })
 	@Column()
 	name!: string;
 
-	/** Tác giả */
-	@ApiProperty({ description: 'Tác giả' })
+	/** Author name */
+	@ApiProperty({ description: 'Author name' })
 	@Column()
 	author!: string;
 
-	/** Ngày xuất bản */
-	@ApiProperty({ description: 'Ngày xuất bản', name: 'publication_date' })
+	/** Publication date */
+	@ApiProperty({ description: 'Publication date', name: 'publication_date' })
 	@Column({ name: 'publication_date', type: 'timestamptz' })
 	@Expose({ name: 'publication_date' })
 	publicationDate!: Date;

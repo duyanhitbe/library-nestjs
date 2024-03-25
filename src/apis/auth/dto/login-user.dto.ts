@@ -3,14 +3,14 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
 
 export class LoginUserDto {
-	/** Tài khoản đăng nhập */
-	@ApiProperty({ description: 'Tài khoản đăng nhập' })
+	/** Username login */
+	@ApiProperty({ description: 'Username login' })
 	@IsString()
 	@IsNotEmpty()
 	username!: string;
 
-	/** Mật khẩu */
-	@ApiProperty({ description: 'Mật khẩu' })
+	/** Password login */
+	@ApiProperty({ description: 'Password login' })
 	@IsString()
 	@IsNotEmpty()
 	password!: string;
@@ -22,8 +22,8 @@ export class LoginUserResponseDto {
 	@Expose({ name: 'access_token' })
 	accessToken!: string;
 
-	/** Thời hạn của access token */
-	@ApiProperty({ description: 'Thời hạn của access token', name: 'expires_in' })
+	/** Expiration of access token */
+	@ApiProperty({ description: 'Expiration of access token', name: 'expires_in' })
 	@Expose({ name: 'expires_in' })
 	expiresIn!: number;
 

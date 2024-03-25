@@ -3,46 +3,46 @@ import { FindOptionsOrder, FindOptionsSelect, FindOptionsWhere } from 'typeorm';
 
 declare global {
 	type FindOptions<T extends BaseEntity> = {
-		/** Điều kiện */
+		/** Query condition */
 		where?: FindOptionsWhere<T> | FindOptionsWhere<T>[];
-		/** Sắp xếp */
+		/** Order method */
 		order?: FindOptionsOrder<T>;
-		/** Nối bảng */
+		/** Join table */
 		relations?: string[];
-		/** Bật tắt eager */
+		/** Eager activation */
 		loadEagerRelations?: boolean;
-		/** Chứa những dữ liệu đã bị xóa */
+		/** Get data with deleted */
 		withDeleted?: boolean;
-		/** Chọn trường lấy ra từ DB */
+		/** Select field should be attached */
 		select?: FindOptionsSelect<T>;
 	};
 
 	type FindOrFailOptions<T extends BaseEntity> = FindOptions<T> & {
-		/** Thông báo khi không tìm thấy record */
+		/** Error message when record not found */
 		errorMessage?: string;
 	};
 
 	type FindPaginatedOptions<T extends BaseEntity> = Partial<FindOptions<T>> & {
-		/** Số item trong một trang */
+		/** Number of item per page */
 		limit?: number;
-		/** Số trang hiện tại */
+		/** Current page */
 		page?: number;
 		/**
-		 * Lọc
+		 * Extend filter
 		 * @examples { "name": "ABC" }
 		 */
 		filter?: FindOptionsWhere<T> | FindOptionsWhere<T>[];
 	};
 
 	type IPaginationResponse<T> = {
-		/** Mảng các items */
+		/** A list of data */
 		data: T[];
 		pagination: {
-			/** Số item trong một trang */
+			/** Number of item per page */
 			limit: number;
-			/** Số trang hiện tại */
+			/** Current page */
 			page: number;
-			/** Tổng số lượng item */
+			/** Total record without limitation */
 			total: number;
 		};
 	};
@@ -50,17 +50,17 @@ declare global {
 	type IResponse<T> = {
 		/** Response status code */
 		status: number;
-		/** Thông báo */
+		/** Response message */
 		message: string;
-		/** Dữ liệu */
+		/** Response data */
 		data: T;
-		/** Dữ liệu phân trang */
+		/** Response pagination */
 		pagination?: {
-			/** Số item trong một trang */
+			/** Number of item per page */
 			limit: number;
-			/** Số trang hiện tại */
+			/** Current page */
 			page: number;
-			/** Tổng số lượng item */
+			/** Total record without limitation */
 			total: number;
 		};
 	};

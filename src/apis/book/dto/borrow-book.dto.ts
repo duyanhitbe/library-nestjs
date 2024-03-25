@@ -7,26 +7,26 @@ import { Exclude, Expose, Type } from 'class-transformer';
 import { BookEntity } from '../entities/book.entity';
 
 export class BorrowBookDto {
-	/** Mã sách */
-	@ApiProperty({ description: 'Mã sách', name: 'book_id' })
+	/** Book's id */
+	@ApiProperty({ description: "Book's id", name: 'book_id' })
 	@IsUUID()
 	@Expose({ name: 'book_id' })
 	bookId!: string;
 
-	/** Tên người mượn sách */
-	@ApiProperty({ description: 'Tên người mượn sách' })
+	/** Borrower name */
+	@ApiProperty({ description: 'Borrower name' })
 	@IsString()
 	@IsNotEmpty()
 	name!: string;
 
-	/** Số điện thoại người mượn sách */
-	@ApiProperty({ description: 'Số điện thoại người mượn sách' })
+	/** Borrower phone */
+	@ApiProperty({ description: 'Borrower phone' })
 	@IsString()
 	@IsNotEmpty()
 	phone!: string;
 
-	/** Địa chỉ người mượn sách */
-	@ApiProperty({ description: 'Địa chỉ người mượn sách' })
+	/** Borrower address */
+	@ApiProperty({ description: 'Borrower address' })
 	@IsString()
 	@IsNotEmpty()
 	address!: string;

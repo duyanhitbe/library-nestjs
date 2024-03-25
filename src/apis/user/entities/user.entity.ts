@@ -7,19 +7,19 @@ import { RoleEnum } from '../user.enum';
 
 @Entity({ name: 'users' })
 export class UserEntity extends BaseEntity {
-	/** Tài khoản đăng nhập */
-	@ApiProperty({ description: 'Tài khoản đăng nhập' })
+	/** Username login */
+	@ApiProperty({ description: 'Username login' })
 	@Column({ unique: true })
 	username!: string;
 
-	/** Mật khẩu */
+	/** Password login */
 	@ApiHideProperty()
 	@Column()
 	@Exclude()
 	password!: string;
 
-	/** Role */
-	@ApiProperty({ description: 'Role' })
+	/** User role */
+	@ApiProperty({ description: 'User role' })
 	@Column({ enum: RoleEnum })
 	role!: RoleEnum;
 

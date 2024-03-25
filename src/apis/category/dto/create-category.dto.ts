@@ -2,8 +2,8 @@ import { IsNotEmpty, IsString } from '@common';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateCategoryDto {
-	/** name */
-	@ApiProperty({ description: 'name' })
+	/** Category name */
+	@ApiProperty({ description: 'Category name' })
 	@IsString()
 	@IsNotEmpty()
 	name!: string;
